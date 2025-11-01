@@ -58,8 +58,8 @@ public class Employee {
     private Double salary;
 
     @Column(name = "full_time")
-    @Min(value = 0, message = "Full time must be 0 or 1")
-    @Max(value = 1, message = "Full time must be 0 or 1")
+    @Min(value = 0, message = "Full time must be 0 to 3")
+    @Max(value = 3, message = "Full time must be 0 to 3")
     private int fullTime;
 
     public Employee() {}
