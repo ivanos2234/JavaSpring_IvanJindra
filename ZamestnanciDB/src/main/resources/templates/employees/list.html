@@ -67,8 +67,8 @@
             <td th:text="${emp.salary > 0 ? emp.salary : 'N/A'}"
                 th:classappend="${emp.salary <= 0} ? 'text-danger fw-bold' : ''"></td>
             <td>
-                <span th:if="${emp.fullTime == 0}" class="badge bg-warning text-dark badge-fulltime">Part-Time</span>
-                <span th:if="${emp.fullTime == 1}" class="badge bg-success badge-fulltime">Full-Time</span>
+                <span th:if="${emp.fullTime == 0}" class="badge bg-success text-dark badge-fulltime">Full-Time</span>
+                <span th:if="${emp.fullTime == 1}" class="badge bg-warning badge-fulltime">Part-Time</span>
                 <span th:if="${emp.fullTime == 2}" class="badge bg-info text-dark badge-fulltime">Contract</span>
                 <span th:if="${emp.fullTime == 3}" class="badge bg-secondary badge-fulltime">Intern</span>
             </td>

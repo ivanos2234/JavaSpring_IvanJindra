@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import sk.ukf.zamestnancidb.dto.ApiResponse;
 import sk.ukf.zamestnancidb.entity.Employee;
+import sk.ukf.zamestnancidb.exception.EmailAlreadyExistsException;
 import sk.ukf.zamestnancidb.service.EmployeeService;
 
 import java.time.LocalDateTime;
@@ -54,23 +56,34 @@ public class EmployeeController {
         return "employees/form";
     }
 
-    @PostMapping
-    public String createEmployee(@Valid @ModelAttribute("student") Employee employee) {
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable int id, Model model) {
 
-        employee.setId(0);
-        employeeService.save(employee);
-        ApiResponse<Employee> response = ApiResponse.success(employee, LocalDateTime.now().toString());
+        Employee employee = employeeService.findById(id);
 
-        return "redirect:/employees";
+        model.addAttribute("employee", employee);
+
+        model.addAttribute("jobTitle", jobTitle);
+
+        return "employees/form";
     }
 
-//    todo Update
-//    @PutMapping("/employees/{id}")
-//    public ResponseEntity<ApiResponse<Employee>> update(@PathVariable int id, @Valid @RequestBody Employee employee) {
-//        employee.setId(id);
-//        Employee updatedEmployee = employeeService.save(employee);
-//        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(updatedEmployee, "Employee updated successfully", LocalDateTime.now().toString()));
-//    }
+    @PostMapping
+    public String saveEmployee(@Valid @ModelAttribute("employee") Employee employee, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("jobTitle", jobTitle);
+            return "employees/form";
+        }
+
+        try {
+            employeeService.save(employee);
+            return "redirect:/employees";
+        } catch (EmailAlreadyExistsException ex) {
+            bindingResult.rejectValue("email", "email.exists", ex.getMessage());
+            return "employees/form";
+        }
+    }
 
     @DeleteMapping("/{id}")
     public String deleteEmployee(@PathVariable int id) {

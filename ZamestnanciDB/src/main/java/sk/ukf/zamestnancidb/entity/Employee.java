@@ -20,16 +20,18 @@ public class Employee {
 
     @Column(name = "first_name")
     @NotBlank(message = "first name is required")
-    @Size(min = 2, max = 50, message = "first name is limited to 2 - 50 symbols")
+    @Size(min = 2, max = 255, message = "first name is limited to 2 - 255 symbols")
     private String firstName;
 
     @Column(name = "last_name")
     @NotBlank(message = "last name is required")
-    @Size(min = 2, max = 50, message = "last name is limited to 2 - 50 symbols")
+    @Size(min = 2, max = 255, message = "last name is limited to 2 - 255 symbols")
     private String lastName;
 
     @Column(name = "birth_date")
+    @NotNull(message = "Birt date can't be empty")
     @Past(message = "Birth date must be in the past")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate birthDate;
 
     @Column(name = "email")
@@ -50,11 +52,11 @@ public class Employee {
 
     @Column(name = "job_title")
     @NotBlank(message = "Job title is required")
-    @Size(min = 2, max = 50, message = "Job title is limited to 2 - 50 symbols")
+    @Size(min = 2, max = 255, message = "Job title is limited to 2 - 255 symbols")
     private String jobTitle;
 
     @Column(name = "salary")
-    @Digits(integer = 10, fraction = 0, message = "Salary must be a whole number with up to 10 digits")
+    @Min(value = 0, message = "Salary can't be negative")
     private Double salary;
 
     @Column(name = "full_time")

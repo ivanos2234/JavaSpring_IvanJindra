@@ -17,7 +17,7 @@
 <div class="container">
 
     <div class="header">
-        <h2>Edit Employee</h2>
+        <h2 th:text="${employee.id} != 0 ? 'Edit employee' : 'Add employee'"></h2>
     </div>
 
     <form th:action="@{/employees}" th:object="${employee}" method="post">
@@ -25,14 +25,18 @@
             <div class="card-body">
                 <h5 class="card-title">Employee Information</h5>
 
+                <input type="hidden" th:field="*{id}"/>
+
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="firstName" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="lastName" class="form-label">Last Name</label>
                         <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
                     </div>
                 </div>
 
@@ -40,10 +44,12 @@
                     <div class="col-md-6">
                         <label for="birthDate" class="form-label">Birth Date</label>
                         <input type="date" class="form-control" id="birthDate" th:field="*{birthDate}" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                     </div>
                 </div>
 
@@ -51,14 +57,17 @@
                     <div class="col-md-6">
                         <label for="phone" class="form-label">Phone</label>
                         <input type="tel" class="form-control" id="phone" th:field="*{phone}" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
                     </div>
                     <div class="col-md-6">
                         <label for="jobTitle" class="form-label">Job Title</label>
                         <select type="text" class="form-control" id="jobTitle" th:field="*{jobTitle}" required>
+                            <option value="" disabled selected>Select position</option>
                             <option th:each="jt : ${jobTitle}"
                                     th:value="${jt}"
                                     th:text="${jt}"/>
                         </select>
+                        <div class="text-danger" th:if="${#fields.hasErrors('jobTitle')}" th:errors="*{jobTitle}"></div>
                     </div>
                 </div>
 
@@ -66,6 +75,7 @@
                     <div class="col-md-6">
                         <label for="salary" class="form-label">Salary (€)</label>
                         <input type="number" class="form-control" id="salary" th:field="*{salary}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label d-block">Full Time</label>
@@ -89,13 +99,15 @@
                             <input class="form-check-input" type="radio" th:field="*{fullTime}" id="Intern" value="3">
                             <label class="form-check-label" for="Intern">Intern</label>
                         </div>
+                        <div class="text-danger" th:if="${#fields.hasErrors('fullTime')}" th:errors="*{fullTime}"></div>
                     </div>
                 </div>
 
             </div>
             <div class="card-footer">
                 <a th:href="@{/employees}" class="btn btn-secondary">Back to List</a>
-                <button type="submit" class="btn btn-primary">Add Employee</button>
+                <button type="submit" class="btn btn-primary"
+                        th:text="${employee.id} != 0 ? 'Edit employee' : 'Add employee'"></button>
             </div>
         </div>
     </form>

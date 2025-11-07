@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="sk" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <title>Error Page</title>
+    <style>
+        body {
+            padding-top: 20px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            color: #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h2>Oops! Something went wrong</h2>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Error Details</h5>
+
+            <div class="alert alert-danger error-message">
+                <p th:text="${message}"></p>
+            </div>
+
+            <div class="text-center">
+                <a th:href="@{/employees}" class="btn btn-secondary">Späť na zoznam</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-cu3wyZ4uGpNuxFcbXcvrkjkXckI/4L33U4o22Z7FJ3d3wM4l8QKjTn4A4Vb8RPSz8"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
